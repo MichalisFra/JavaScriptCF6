@@ -56,6 +56,7 @@ function insertNote(text) {
 
     newNote.querySelector('.note_del-btn').addEventListener('click', function() {
         deleteCheckedNotes()
+        newNote.remove()
     })
 
     notesWrapper.appendChild(newNote)
