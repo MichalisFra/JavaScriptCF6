@@ -52,8 +52,10 @@ function insertNote(text) {
     newNote.classList.remove('hidden')
     newNote.querySelector('.note-text').textContent = text
 
+    
+
     newNote.querySelector('.note_del-btn').addEventListener('click', function() {
-        newNote.remove()
+        deleteCheckedNotes()
     })
 
     notesWrapper.appendChild(newNote)
@@ -61,4 +63,15 @@ function insertNote(text) {
 
 function reset() {
     document.querySelector('#inputNote').value = ''
+}
+
+function deleteCheckedNotes() {
+    const notesWrapper = document.querySelector('.notes-wrapper');
+    const checkboxes = notesWrapper.querySelectorAll('.note-check');
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            checkbox.closest('.note').remove();
+        }
+    })
 }

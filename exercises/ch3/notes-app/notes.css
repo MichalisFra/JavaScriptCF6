@@ -62,8 +62,8 @@
 }
 
 .note_del-btn {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     color: white;
     background-color:rgb(130, 10, 30);
     border-radius: 10%;
@@ -97,3 +97,28 @@ background-color:rgb(130, 10, 30);
     display: none;
 }
 
+.note-check {
+   position: absolute;
+   opacity: 0;
+}
+
+.note-check + .note-text::before {
+    /* Custom checkbox appearance */
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    border: 1px solid rgb(130, 10, 30); 
+    background-color: white;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+
+.note-check:checked + .note-text::before {
+    /* Checked state styles */
+    background-color: rgb(130, 10, 30); /* Change background color */
+    border-color: rgb(130, 10, 30);  /* Change border color */
+}
