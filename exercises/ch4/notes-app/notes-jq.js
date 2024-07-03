@@ -2,17 +2,16 @@ const daysGR = ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτ�
 const monthsGR = ['Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου', 'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου']
 let noteId = 0
 
-window.addEventListener('DOMContentLoaded', function() {
+$(function() {
+    setInterval(printGRDate, 1000)
 
-    this.setInterval(printGRDate, 1000)
+    $('#addNoteBtn').on('click', function() {
+        onInsertHandler($('#inputNote').val().trim())
+    })
 
-        this.document.querySelector('#addNoteBtn').addEventListener('click', function() {
-            onInsertHandler(document.querySelector('#inputNote').value.trim())
-        })
-
-    this.document.querySelector('#inputNote').addEventListener('keyup', function(e) {
+    $('#inputNote').on('keyup', function(e) {
         if (e.key === 'Enter') {
-            onInsertHandler(this.value.trim())
+            onInsertHandler($(this).val().trim())
         }
     })
 })
@@ -34,7 +33,7 @@ function printGRDate() {
     let dateStr = `${dayStr}, ${date} ${monthStr} ${year}`
     let timeStr = `${(hours < 10) ? '0' : ''}${hours}:${(minutes < 10) ? '0' : ''}${minutes}:${(seconds < 10) ? '0' : ''}${seconds}`
 
-    document.querySelector('#dateTxt').innerHTML = dateStr + '<br>' + timeStr
+    $('#dateTxt').html(dateStr + '<br>' + timeStr)
 }
 
 /**
@@ -53,34 +52,34 @@ function insertNote(note) {
 
     noteId++
 
-    let clone = document.querySelector('.note.hidden').cloneNode(true)
-    clone.classList.remove('hidden')
+    let clone = $('.note.hidden').clone()
+    clone.removeClass('hidden')
 
-    clone.querySelector('#noteCheck').addEventListener('click', function() {
-        strikeThrough(clone.querySelector('.note-text'))
+    clone.find('#noteCheck').on('click', function() {
+        strikeThrough(clone.find('.note-text'))
     })
 
-    clone.querySelector('.note_del-btn').addEventListener('click', function() {
-        deleteNote(this.parentNode)
+    clone.find('.note_del-btn').on('click', function() {
+        deleteNote($(this).parent())
     })
 
-    let cloneNoteInfo = clone.querySelector('.note-info')
-    cloneNoteInfo.children[0].id = 'noteCheck' + noteId
-    cloneNoteInfo.children[1].htmlFor = 'noteCheck' + noteId
-    clone.children[1].id = 'noteDelBtn' + noteId
+    let cloneNoteInfo = clone.find('.note-info')
+    cloneNoteInfo.children().eq(0).attr('id', 'noteCheck' + noteId)
+    cloneNoteInfo.children().eq(1).attr('for', 'noteCheck' + noteId)
+    clone.children().eq(1).attr('id', 'noteDelBtn' + noteId)
 
-    clone.querySelector('.note-text').innerHTML = note
-    document.querySelector('.notes-wrapper').appendChild(clone)
+    clone.find('.note-text').html(note)
+    $('.notes-wrapper').append(clone)
 }
 
 function strikeThrough(element) {
-    element.classList.toggle('line-through')
+    $(element).toggleClass('line-through')
 }
 
 function deleteNote(note) {
-    note.remove()
+    $(note).remove()
 }
 
 function reset() {
-    document.querySelector('#inputNote').value = ''
+    $('#inputNote').val('')
 }
