@@ -17,7 +17,12 @@ function onClickedMeClicked() {
  * Updates the state and updates the UI
  */
 function updateBg() {
-    color = getColor()
+ 
+    let newColor = getColor()
+    while(newColor === color) {
+        newColor = getColor()
+    }
+    color = newColor
     showBgColor()
 }
 
